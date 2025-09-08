@@ -1,0 +1,30 @@
+{
+    "zones": {
+        "1": {
+            "pin": 17,
+            "timeout": 300,
+            "description": "Main Lab Area"
+        },
+        "2": {
+            "pin": 27,
+            "timeout": 300,
+            "description": "Equipment Zone"
+        },
+        "3": {
+            "pin": 22,
+            "timeout": 300,
+            "description": "Study Area"
+        }
+    },
+    "schedule": {
+        "working_hours": {
+            "start": "08:00",
+            "end": "18:00"
+        }
+    },
+    "energy_settings": {
+        "motion_threshold": 25,
+        "background_learning_rate": 0.2,
+        "minimum_zone_activity": 5
+    }
+}
