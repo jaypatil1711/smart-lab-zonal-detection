@@ -1,9 +1,23 @@
-opencv-python
-numpy
-picamera
-imutils
-matplotlib
-ultralytics
-torch
-torchvision
-flask
+# Simple Smart Lab System Requirements
+# Install with: pip install -r requirements.txt
+
+# Core dependencies
+opencv-python==4.12.0.88
+numpy==2.2.6
+Pillow==11.3.0
+ultralytics==8.3.198
+
+# HTTP requests for cloud APIs
+requests==2.32.5
+
+# Optional: For better performance
+aiohttp==3.9.0
+
+# Optional: For data handling
+pandas==2.2.0
+
+# Optional: For configuration
+python-dotenv==1.0.0
+
+# Optional: For logging
+colorlog==6.8.0

@@ -1,0 +1,23 @@
+# Simple Smart Lab System Requirements
+# Install with: pip install -r requirements_simple.txt
+
+# Core dependencies - let pip resolve versions automatically
+opencv-python
+numpy
+Pillow
+ultralytics
+
+# HTTP requests for cloud APIs
+requests
+
+# Optional: For better performance
+aiohttp
+
+# Optional: For data handling
+pandas
+
+# Optional: For configuration
+python-dotenv
+
+# Optional: For logging
+colorlog

@@ -1,93 +1,132 @@
-# Smart Lab Zonal Detection System
+# 🚀 Smart Lab Zonal Detection System
 
-A smart laboratory management system that uses computer vision and IoT to detect occupancy in different zones and manage energy efficiency.
+**Simple, Fast, and Easy to Use!** No Docker, no async complexity - just add your API key and run!
 
-## Features
+## ✨ Features
 
-### Motion Detection & Zonal Analysis
-- Real-time motion detection using computer vision
-- Multiple zone monitoring with independent settings
-- Adjustable motion sensitivity thresholds
-- Background subtraction for accurate detection
-- Visual feedback with zone status overlay
-- Support for both Raspberry Pi and USB cameras
+- 🎯 **Real-time Object Detection** - Detect people in lab zones
+- ☁️ **Cloud AI Integration** - Use powerful cloud APIs with just an API key
+- ⚡ **Simple Setup** - No Docker, no complex configuration
+- 🔋 **Energy Management** - Smart energy saving based on occupancy
+- 📊 **Performance Monitoring** - Track system performance
+- 🎤 **Voice Commands** - Simple voice command processing
 
-### Energy Management
-- Automated device control based on zone occupancy
-- Individual timeout settings for each zone
-- Working hours scheduling system (8 AM - 6 PM by default)
-- Real-time power state management
-- GPIO-based device control for each zone
-- Energy usage statistics and reporting
+## 🚀 Quick Start
 
-### Smart Automation
-- Configurable zone-specific timeouts
-- Automatic device deactivation in unoccupied zones
-- Working hours enforcement
-- Background monitoring thread for reliability
-- Automatic state recovery after system restart
-
-### System Features
-- Real-time monitoring dashboard
-- Live occupancy status display
-- Zone activity visualization
-- Easy-to-use configuration system
-- Modular and extensible architecture
-- Clean shutdown and resource management
-
-### Configuration & Customization
-- JSON-based configuration file
-- Adjustable zone parameters
-- Customizable timeout settings
-- Configurable GPIO pin assignments
-- Flexible working hours definition
-- Adjustable motion detection parameters
-
-## Project Structure
-
-```
-zonal-detection
-├── src
-│   ├── main.py                # Entry point of the application
-│   ├── camera
-│   │   ├── camera_stream.py    # Handles camera streaming
-│   │   └── camera_utils.py     # Utility functions for camera operations
-│   ├── detection
-│   │   ├── zone_detection.py    # Implements zonal detection logic
-│   │   └── motion_detection.py   # Functions for detecting motion
-│   └── utils
-│       └── helpers.py          # Helper functions for logging and configuration
-├── requirements.txt            # Required Python libraries
-├── README.md                   # Project documentation
-└── .gitignore                  # Files to ignore in version control
+### 1. Install Dependencies
+```bash
+python setup_simple.py
 ```
 
-## Setup Instructions
+### 2. Get Free API Key
+Choose one of these **FREE** options:
 
-1. **Install Required Libraries**: Make sure you have Python installed on your Raspberry Pi. Install the required libraries by running:
-   ```
-   pip install -r requirements.txt
-   ```
+| Service | Free Tier | Setup |
+|---------|-----------|-------|
+| **Google Cloud Vision** | 1,000 requests/month | API key only |
+| **Hugging Face** | 50-100 calls/day | Access token only |
 
-2. **Connect the Raspberry Pi Camera**: Ensure that the Raspberry Pi camera is properly connected and enabled in the Raspberry Pi configuration settings.
+**Recommended: Google Cloud Vision API**
+1. Go to [Google Cloud Console](https://console.cloud.google.com/)
+2. Enable Vision API
+3. Create API key
+4. Add to `.env` file: `GOOGLE_API_KEY=your_key_here`
 
-3. **Run the Application**: Execute the main script to start the zonal detection system:
-   ```
-   python src/main.py
-   ```
+### 3. Run the System
+```bash
+python src/simple_main.py
+```
 
-## Usage
+## 🎮 Controls
 
-- The application will start capturing video from the Raspberry Pi camera.
-- It will analyze the frames for motion detection within predefined zones.
-- Adjust the zone parameters in `zone_detection.py` as needed for your specific use case.
+- **`q`** - Quit
+- **`r`** - Reset zones  
+- **`i`** - Show insights
+- **`p`** - Show performance
+- **`c`** - Test cloud detection
 
-## Main Components
+## 📁 Project Structure
 
-- **Camera Stream**: Captures video frames from the Raspberry Pi camera.
-- **Zonal Detection**: Analyzes frames to detect motion in specified zones.
-- **Motion Detection**: Implements algorithms for detecting motion in video frames.
+```
+zonal-detection/
+├── src/
+│   ├── simple_main.py          # Main system (simple, no async!)
+│   ├── simple_ai_client.py     # Cloud API client
+│   ├── camera/                 # Camera handling
+│   ├── detection/              # Local YOLO detection
+│   └── utils/                  # Utilities
+├── requirements.txt            # Simple dependencies
+├── setup_simple.py            # Easy setup script
+├── README_SIMPLE.md           # Detailed documentation
+└── .env                       # API keys (create this)
+```
 
-## License
+## 🔧 How It Works
 
-This project is open-source and available for modification and distribution under the MIT License.
+### Simple Architecture
+```
+Camera → Local YOLO → Display
+   ↓
+Cloud API (on demand) → Results
+```
+
+### Key Benefits
+- **No Server Management** - Cloud handles everything
+- **No Model Downloads** - Use cloud models
+- **No Docker** - Simple Python installation
+- **No Async Complexity** - Synchronous code
+- **Pay Per Use** - Only pay for API calls
+
+## 💡 Usage Examples
+
+### Basic Detection
+```python
+from simple_ai_client import SimpleAIClient
+
+client = SimpleAIClient(api_key="your_key", service="google_vision")
+result = client.detect_objects(image)
+print(f"Found {len(result['detections'])} objects")
+```
+
+### Voice Commands
+```python
+response = client.process_voice_command("What's the lab status?")
+print(response['response'])
+```
+
+## 🆓 Free API Options
+
+### Google Cloud Vision API (Recommended)
+- **Free Tier:** 1,000 requests/month
+- **Perfect for:** Object detection, person detection
+- **Setup:** Google account + API key
+
+### Hugging Face Inference API
+- **Free Tier:** 50-100 API calls/day
+- **Perfect for:** Custom models
+- **Setup:** Free account + access token
+
+## 🎯 Perfect For
+
+- **Prototyping** - Quick setup and testing
+- **Small Projects** - No infrastructure needed
+- **Learning** - Simple, understandable code
+- **Cost-Conscious** - Pay only for usage
+- **Quick Demos** - Get running in minutes
+
+## 📚 Documentation
+
+- **[Simple Setup Guide](README_SIMPLE.md)** - Detailed setup instructions
+- **[API Documentation](README_SIMPLE.md#api-integration)** - How to use cloud APIs
+- **[Troubleshooting](README_SIMPLE.md#troubleshooting)** - Common issues and solutions
+
+## 🚀 Next Steps
+
+1. **Start Simple** - Use this version first
+2. **Get API Key** - Choose Google Vision or Hugging Face
+3. **Run System** - `python src/simple_main.py`
+4. **Customize** - Add your own features
+
+---
+
+**Ready to get started?** Run `python setup_simple.py` and you'll be up and running in minutes! 🎉
