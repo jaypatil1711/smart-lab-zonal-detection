@@ -3,17 +3,11 @@
         "1": {
             "pin": 17,
             "timeout": 300,
-            "description": "Main Lab Area"
-        },
-        "2": {
-            "pin": 27,
-            "timeout": 300,
-            "description": "Equipment Zone"
-        },
-        "3": {
-            "pin": 22,
-            "timeout": 300,
-            "description": "Study Area"
+            "description": "Teacher Detection Zone",
+            "x1": 50,
+            "y1": 50,
+            "x2": 600,
+            "y2": 400
         }
     },
     "schedule": {
@@ -26,5 +20,12 @@
         "motion_threshold": 25,
         "background_learning_rate": 0.2,
         "minimum_zone_activity": 5
+    },
+    "yolo_settings": {
+        "model_path": "yolov8n.pt",
+        "confidence_threshold": 0.5,
+        "target_classes": ["person"],
+        "iou_threshold": 0.45,
+        "description": "Teacher Detection System"
     }
 }

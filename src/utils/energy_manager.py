@@ -1,32 +1,21 @@
-import RPi.GPIO as GPIO
 from datetime import datetime, time
 import json
-import threading
 from typing import Dict, List, Optional
 import time as time_module
 
 class EnergyManager:
     def __init__(self, config_file: str = 'energy_config.json'):
-        # Initialize GPIO
-        GPIO.setmode(GPIO.BCM)
-        GPIO.setwarnings(False)
-        
         # Load configuration
         self.config = self._load_config(config_file)
         
         # Initialize zone states and timers
         self.zone_states: Dict[int, bool] = {}  # True if occupied
         self.zone_timers: Dict[int, Optional[float]] = {}
-        self.device_pins: Dict[int, int] = {}
+        self.active_zones = 0
+        self.total_zones = 0
         
-        # Setup GPIO pins for each zone
+        # Initialize zones
         self._setup_zones()
-        
-        # Start monitoring thread
-        self.running = True
-        self.monitor_thread = threading.Thread(target=self._monitor_zones)
-        self.monitor_thread.daemon = True
-        self.monitor_thread.start()
 
     def _load_config(self, config_file: str) -> dict:
         try:
@@ -52,43 +41,33 @@ class EnergyManager:
             return config
 
     def _setup_zones(self):
+        """Initialize zone states without GPIO"""
         for zone_id, zone_config in self.config['zones'].items():
             zone_id = int(zone_id)
-            pin = zone_config['pin']
-            
-            # Setup GPIO pin as output
-            GPIO.setup(pin, GPIO.OUT)
-            GPIO.output(pin, GPIO.LOW)
-            
-            # Initialize state tracking
             self.zone_states[zone_id] = False
             self.zone_timers[zone_id] = None
-            self.device_pins[zone_id] = pin
+            self.total_zones += 1
 
     def update_zone_status(self, zone_id: int, is_occupied: bool):
         """Update the occupancy status of a zone"""
         if zone_id in self.zone_states:
+            was_occupied = self.zone_states[zone_id]
             self.zone_states[zone_id] = is_occupied
-            if is_occupied:
-                # Reset timer if zone becomes occupied
-                self.zone_timers[zone_id] = None
+            
+            if is_occupied and not was_occupied:
+                self.active_zones += 1
                 self._activate_zone(zone_id)
-            else:
-                # Start timer for zone timeout
-                self.zone_timers[zone_id] = time_module.time()
+            elif not is_occupied and was_occupied:
+                self.active_zones -= 1
+                self._deactivate_zone(zone_id)
 
     def _activate_zone(self, zone_id: int):
-        """Activate devices in a zone"""
-        if self._is_within_working_hours():
-            pin = self.device_pins.get(zone_id)
-            if pin is not None:
-                GPIO.output(pin, GPIO.HIGH)
+        """Mock activation of devices in a zone"""
+        pass
 
     def _deactivate_zone(self, zone_id: int):
-        """Deactivate devices in a zone"""
-        pin = self.device_pins.get(zone_id)
-        if pin is not None:
-            GPIO.output(pin, GPIO.LOW)
+        """Mock deactivation of devices in a zone"""
+        pass
 
     def _is_within_working_hours(self) -> bool:
         """Check if current time is within working hours"""
@@ -116,11 +95,9 @@ class EnergyManager:
             time_module.sleep(1)  # Check every second
 
     def cleanup(self):
-        """Cleanup GPIO and stop monitoring"""
-        self.running = False
-        if self.monitor_thread.is_alive():
-            self.monitor_thread.join()
-        GPIO.cleanup()
+        """Cleanup resources"""
+        self.zone_states.clear()
+        self.zone_timers.clear()
 
     def get_zone_status(self) -> Dict[int, bool]:
         """Get the current status of all zones"""
@@ -128,10 +105,10 @@ class EnergyManager:
 
     def get_energy_stats(self) -> Dict[str, any]:
         """Get energy usage statistics"""
-        # This could be expanded to include real energy monitoring
         stats = {
             'active_zones': sum(1 for state in self.zone_states.values() if state),
             'total_zones': len(self.zone_states),
-            'working_hours': self.config['schedule']['working_hours']
+            'working_hours': self.config['schedule']['working_hours'],
+            'occupancy_rate': sum(1 for state in self.zone_states.values() if state) / len(self.zone_states) if len(self.zone_states) > 0 else 0
         }
         return stats

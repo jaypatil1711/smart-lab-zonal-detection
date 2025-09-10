@@ -1,0 +1,43 @@
+{
+    "models": {
+        "yolo": {
+            "path": "yolov8n.pt",
+            "confidence": 0.5,
+            "iou_threshold": 0.45,
+            "target_classes": ["person", "chair", "desk", "laptop", "book"]
+        },
+        "pose": {
+            "path": "yolov8n-pose.pt",
+            "confidence": 0.6,
+            "keypoints": 17
+        },
+        "face": {
+            "path": "yolov8n-face.pt",
+            "confidence": 0.7
+        }
+    },
+    "tracking": {
+        "max_disappeared": 30,
+        "max_distance": 50,
+        "tracking_method": "centroid"
+    },
+    "analytics": {
+        "activity_threshold": 0.8,
+        "pose_confidence": 0.6,
+        "face_recognition": false,
+        "emotion_detection": false
+    },
+    "ml_features": {
+        "occupancy_prediction": true,
+        "energy_optimization": true,
+        "anomaly_detection": true,
+        "activity_classification": true
+    },
+    "data_collection": {
+        "save_detections": true,
+        "save_poses": true,
+        "save_activities": true,
+        "database_path": "ai_data.db"
+    }
+}
+

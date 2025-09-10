@@ -3,3 +3,7 @@ numpy
 picamera
 imutils
 matplotlib
+ultralytics
+torch
+torchvision
+flask
